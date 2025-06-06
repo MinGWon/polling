@@ -1,22 +1,38 @@
 import { connectDB } from '@/lib/db';
 
-// Function to calculate confidence interval for proportion with finite population correction
-function calculateConfidenceInterval(count, total, confidenceLevel = 0.90, populationSize = 308) {
+// Wilson Score Interval for better confidence intervals
+function calculateWilsonInterval(successes, total, confidenceLevel = 0.95, populationSize = 308) {
   if (total === 0) return { lower: 0, upper: 0 };
   
-  const proportion = count / total;
-  const z = confidenceLevel === 0.90 ? 1.645 : 1.96; // 90% or 95% confidence
+  const z = confidenceLevel === 0.95 ? 1.96 : 1.645;
+  const p = successes / total;
+  const n = total;
   
-  // Finite population correction factor
-  const fpc = Math.sqrt((populationSize - total) / (populationSize - 1));
+  // Wilson Score Interval calculation (without FPC first)
+  const denominator = 1 + (z * z) / n;
+  const centre = (p + (z * z) / (2 * n)) / denominator;
+  const halfWidth = (z / denominator) * Math.sqrt((p * (1 - p) / n) + (z * z) / (4 * n * n));
   
-  // Standard error with finite population correction
-  const standardError = Math.sqrt((proportion * (1 - proportion)) / total) * fpc;
-  const margin = z * standardError;
+  let lower = centre - halfWidth;
+  let upper = centre + halfWidth;
+  
+  // Apply finite population correction to the margin of error
+  if (populationSize && populationSize > n) {
+    const fpc = Math.sqrt((populationSize - n) / (populationSize - 1));
+    const originalMargin = halfWidth;
+    const correctedMargin = originalMargin * fpc;
+    
+    lower = centre - correctedMargin;
+    upper = centre + correctedMargin;
+  }
+  
+  // Ensure bounds are within [0, 1]
+  lower = Math.max(0, lower);
+  upper = Math.min(1, upper);
   
   return {
-    lower: Math.max(0, Math.round((proportion - margin) * 100 * 10) / 10),
-    upper: Math.min(100, Math.round((proportion + margin) * 100 * 10) / 10)
+    lower: Math.round(lower * 100 * 10) / 10,
+    upper: Math.round(upper * 100 * 10) / 10
   };
 }
 
@@ -39,10 +55,10 @@ export default async function handler(req, res) {
     const [totalCount] = await db.execute('SELECT COUNT(*) as total FROM responses');
     const total = totalCount[0].total;
     
-    // Calculate overall statistics with confidence intervals (N=308)
+    // Calculate overall statistics with Wilson Score intervals
     const overall = overallResults.map(result => {
       const percentage = total > 0 ? Math.round((result.count / total) * 100 * 10) / 10 : 0;
-      const confidenceInterval = calculateConfidenceInterval(result.count, total, 0.90, 308);
+      const confidenceInterval = calculateWilsonInterval(result.count, total, 0.95, 308);
       
       return {
         name: result.candidate,
@@ -86,7 +102,7 @@ export default async function handler(req, res) {
         const percentage = gradeData.total > 0 ? 
           Math.round((result.count / gradeData.total) * 100 * 10) / 10 : 0;
         const gradePopSize = gradePopulations[result.grade] || 103;
-        const confidenceInterval = calculateConfidenceInterval(result.count, gradeData.total, 0.90, gradePopSize);
+        const confidenceInterval = calculateWilsonInterval(result.count, gradeData.total, 0.95, gradePopSize);
         
         gradeData.candidates.push({
           name: result.candidate,

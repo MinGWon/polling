@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Layout.module.css';
@@ -5,9 +7,11 @@ import Swal from 'sweetalert2';
 
 const Layout = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== 'undefined') {
       const userData = localStorage.getItem('user');
       if (userData) {
@@ -34,7 +38,10 @@ const Layout = ({ children }) => {
     }
   };
 
-  if (!user) return children;
+  // 로그인하지 않은 경우의 메뉴
+  const guestMenus = [
+    { icon: '📊', text: '전광판', path: '/display' }
+  ];
 
   const adminMenus = [
     { icon: '📊', text: '대시보드', path: '/admin/dashboard' },
@@ -46,7 +53,22 @@ const Layout = ({ children }) => {
     { icon: '📝', text: '출구조사', path: '/surveyor/survey' }
   ];
 
-  const menus = user.role === 'admin' ? adminMenus : surveyorMenus;
+  let menus, displayName, roleText;
+  
+  if (!mounted) {
+    // 서버 사이드 렌더링 시 기본값
+    menus = guestMenus;
+    displayName = '게스트';
+    roleText = '방문자';
+  } else if (user) {
+    menus = user.role === 'admin' ? adminMenus : surveyorMenus;
+    displayName = user.username;
+    roleText = user.role === 'admin' ? '관리자' : '조사원';
+  } else {
+    menus = guestMenus;
+    displayName = '게스트';
+    roleText = '방문자';
+  }
 
   return (
     <div className={styles.container}>
@@ -61,10 +83,8 @@ const Layout = ({ children }) => {
           <div className={styles.userBox}>
             👤
           </div>
-          <span className={styles.username}>{user.username}</span>
-          <span className={styles.role}>
-            {user.role === 'admin' ? '관리자' : '조사원'}
-          </span>
+          <span className={styles.username}>{displayName}</span>
+          <span className={styles.role}>{roleText}</span>
         </div>
 
         <nav className={styles.nav}>
@@ -82,12 +102,14 @@ const Layout = ({ children }) => {
           ))}
         </nav>
 
-        <div className={styles.logout}>
-          <button className={styles.logoutButton} onClick={handleLogout}>
-            <div className={styles.logoutIcon}>🚪</div>
-            <span>로그아웃</span>
-          </button>
-        </div>
+        {mounted && user && (
+          <div className={styles.logout}>
+            <button className={styles.logoutButton} onClick={handleLogout}>
+              <div className={styles.logoutIcon}>🚪</div>
+              <span>로그아웃</span>
+            </button>
+          </div>
+        )}
       </aside>
 
       <main className={styles.main}>

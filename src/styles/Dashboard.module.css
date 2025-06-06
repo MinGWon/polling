@@ -38,6 +38,7 @@
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   padding: 1.5rem;
+  padding-bottom: 0.5rem;
   margin: 0;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
@@ -88,10 +89,70 @@
 }
 
 .updateInfo {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 0.5rem;
+}
+
+.updateLeft {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.updateRight {
+  display: flex;
+  align-items: center;
+}
+
+.updateLabel {
   font-size: 0.9rem;
-  opacity: 0.8;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.updateTime {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: #cbd5e0;
   font-weight: 500;
+}
+
+.clockIcon {
+  font-size: 0.8rem;
+}
+
+.sampleInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #e2e8f0;
+}
+
+.sampleIcon {
+  font-size: 0.8rem;
+}
+
+.sampleInfo strong {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.populationInfo {
+  font-size: 0.8rem;
+  color: #a0aec0;
+  font-weight: 400;
 }
 
 .main {
@@ -576,6 +637,17 @@
 
   .candidateAnalysisGrid {
     grid-template-columns: 1fr;
+  }
+
+  .updateInfo {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .updateLeft {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
