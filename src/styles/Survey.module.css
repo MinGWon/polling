@@ -1,0 +1,417 @@
+.container {
+  background: #f8fafc;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  color: #2d3748;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.header button {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.header button:hover {
+  background: #3182ce;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.form {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field label {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.optionButton {
+  padding: 1rem 1.5rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  color: #4a5568;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.optionButton:hover {
+  border-color: #667eea;
+  background: #f7fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.optionButton.selected {
+  border-color: #667eea;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.optionButton.selected::after {
+  content: '✓';
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.submitButton {
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(72, 187, 120, 0.4);
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  background: #a0aec0;
+  box-shadow: none;
+}
+
+/* Success animation */
+.form.success {
+  animation: successPulse 0.6s ease-out;
+}
+
+@keyframes successPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  
+  .form {
+    padding: 2rem;
+    margin: 1rem;
+    gap: 2.5rem;
+  }
+  
+  .buttonGroup {
+    gap: 0.5rem;
+  }
+  
+  .optionButton {
+    padding: 0.875rem 1.25rem;
+    min-width: 80px;
+    font-size: 0.9rem;
+  }
+  
+  .ballotRow {
+    padding: 1.25rem 1.5rem;
+  }
+  
+  .candidateNumber {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .candidateName {
+    font-size: 1rem;
+  }
+  
+  .stampArea {
+    width: 70px;
+    height: 50px;
+  }
+  
+  .stamp {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  
+  .stampImage {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .form {
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+  
+  .optionButton {
+    padding: 0.75rem 1rem;
+    min-width: 70px;
+    font-size: 0.85rem;
+  }
+  
+  .submitButton {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+  
+  .ballotRow {
+    padding: 1rem;
+  }
+  
+  .candidateInfo {
+    gap: 0.75rem;
+  }
+  
+  .candidateNumber {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+  
+  .candidateName {
+    font-size: 0.9rem;
+  }
+  
+  .stampArea {
+    width: 60px;
+    height: 45px;
+  }
+  
+  .stamp {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.7rem;
+  }
+  
+  .stampImage {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+
+/* Animation for button selection */
+@keyframes selectPulse {
+  0% { transform: scale(1) translateY(-2px); }
+  50% { transform: scale(1.05) translateY(-2px); }
+  100% { transform: scale(1) translateY(-2px); }
+}
+
+.optionButton.selected {
+  animation: selectPulse 0.3s ease-out;
+}
+
+/* Form validation styles */
+.field select:invalid {
+  border-color: #e53e3e;
+}
+
+.field select:valid {
+  border-color: #48bb78;
+}
+
+/* Loading state */
+.form button[disabled] {
+  position: relative;
+  overflow: hidden;
+}
+
+.form button[disabled]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.ballotTable {
+  border: 3px solid #2d3748;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.ballotRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 2rem;
+  border-bottom: 2px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.ballotRow:last-child {
+  border-bottom: none;
+}
+
+.ballotRow:hover {
+  background: #f7fafc;
+}
+
+.ballotRow.stamped {
+  background: linear-gradient(135deg, #f0fff4 0%, #e6fffa 100%);
+  border-left: 5px solid #48bb78;
+}
+
+.candidateInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.candidateNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #4a5568;
+  color: white;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.candidateName {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.stampArea {
+  width: 80px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #cbd5e0;
+  border-radius: 8px;
+  position: relative;
+}
+
+.stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: stampAnimation 0.3s ease-out;
+  transform: rotate(-5deg);
+}
+
+.stampImage {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.3));
+  transition: transform 0.2s ease;
+}
+
+.stampImage:hover {
+  transform: scale(1.05);
+}
+
+@keyframes stampAnimation {
+  0% {
+    transform: scale(0) rotate(-5deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1) rotate(-5deg);
+    opacity: 1;
+  }
+}
+
+.titleSection {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.electionTitle {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+}
