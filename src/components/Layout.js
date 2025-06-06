@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import styles from '@/styles/Layout.module.css';
 import Swal from 'sweetalert2';
 
@@ -74,9 +75,13 @@ const Layout = ({ children }) => {
     <div className={styles.container}>
       <aside className={styles.sidebar}>
         <div className={styles.logo}>
-          <div className={styles.logoBox}>
-            📊
-          </div>
+          <Image 
+            src="/image.png" 
+            alt="로고" 
+            width={60} 
+            height={60}
+            className={styles.logoImage}
+          />
         </div>
         
         <div className={styles.userInfo}>
