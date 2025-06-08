@@ -172,52 +172,66 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
           <div className={styles.gradeAnalysis}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.titleIcon}><i className="fas fa-chart-bar"></i></span>
-              학년별 상세 분석
+              학년별 상세 분석 (모비율의 추정)
+              <span className={styles.confidence}>
+                (위와 동일)
+              </span>
             </h2>
             
             <div className={styles.candidateAnalysisGrid}>
-              {['Y', 'N'].map((candidateName) => {
-                const candidateData = statistics?.byGrade.map(grade => {
-                  const candidate = grade.candidates.find(c => c.name === candidateName);
-                  return {
-                    grade: grade.grade,
-                    percentage: candidate ? candidate.percentage : 0,
-                    confidenceInterval: candidate ? candidate.confidenceInterval : { lower: 0, upper: 0 },
-                    sampleSize: candidate ? candidate.sampleSize : 0,
-                    total: grade.total
-                  };
-                });
-
-                const maxPercentage = Math.max(...candidateData.map(d => d.percentage));
-                const displayName = candidateName === 'Y' ? '찬성' : '반대';
-
-                return (
-                  <div key={candidateName} className={styles.candidateAnalysisCard}>
-                    <div className={styles.candidateAnalysisHeader}>
-                      <h3>{displayName}</h3>
-                    </div>
-                    
-                    <div className={styles.singleBand}>
-                      <div className={styles.gradeBandBar}>
-                        {candidateData?.map((gradeData, index) => (
-                          <div 
-                            key={gradeData.grade}
-                            className={`${styles.gradeSegment} ${styles[`grade${gradeData.grade}`]}`}
-                            style={{ 
-                              width: maxPercentage > 0 ? `${(gradeData.percentage / maxPercentage) * 100}%` : '0%'
-                            }}
-                            title={`${gradeData.grade}학년: ${gradeData.percentage}% (${gradeData.sampleSize}/${gradeData.total}명)`}
-                          >
-                            <span className={styles.gradeSegmentLabel}>
-                              {gradeData.grade}학년 ({gradeData.percentage}%)
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+              {statistics?.byGrade?.map((gradeData) => (
+                <div key={gradeData.grade} className={styles.candidateAnalysisCard}>
+                  <div className={styles.candidateAnalysisHeader}>
+                    <h3>{gradeData.grade}학년</h3>
                   </div>
-                );
-              })}
+                  
+                  <div className={styles.gradeConfidenceContainer}>
+                    {gradeData.candidates
+                      .sort((a, b) => (a.name === 'Y' ? -1 : 1))
+                      .map((candidate) => {
+                        return (
+                          <div key={candidate.name} className={styles.gradeConfidenceRow}>
+                            <div className={styles.gradeVoteBar}>
+                              <div className={styles.gradeConfidenceBar}>
+                                <div 
+                                  className={styles.gradeConfidenceBackground}
+                                  style={{ 
+                                    left: `${candidate.confidenceInterval.lower}%`,
+                                    width: `${candidate.confidenceInterval.upper - candidate.confidenceInterval.lower}%`,
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    background: candidate.name === 'Y' ? 
+                                      'linear-gradient(135deg, #48bb78 0%, #38a169 100%)' : 
+                                      'linear-gradient(135deg, #ed8936 0%, #dd6b20 100%)'
+                                  }}
+                                >
+                                  <div style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: '-100%',
+                                    width: '100%',
+                                    height: '100%',
+                                    background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%)',
+                                    animation: 'shimmer 2s infinite ease-in-out'
+                                  }}></div>
+                                </div>
+                                <div 
+                                  className={styles.gradeEstimatedTag}
+                                  style={{ left: `${candidate.percentage}%` }}
+                                >
+                                  <span className={styles.gradeEstimatedValue}>{candidate.percentage}%</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className={styles.gradePercentageText}>
+                              {candidate.confidenceInterval.lower}% ~ {candidate.confidenceInterval.upper}%
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 

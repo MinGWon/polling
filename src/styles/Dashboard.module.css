@@ -538,7 +538,7 @@
 
 .candidateAnalysisGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
 }
 
@@ -696,6 +696,113 @@
   border-radius: 3px;
 }
 
+.gradeConfidenceGraphs .candidateCard {
+  background: rgba(255, 255, 255, 0.95);
+  color: #2d3748;
+  padding: 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.gradeConfidenceGraphs .candidateCard::before {
+  display: none;
+}
+
+.gradeConfidenceGraphs .candidateHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.gradeConfidenceGraphs .candidateHeader h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.gradeConfidenceGraphs .voteBar {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 8px;
+  overflow: visible;
+  margin-bottom: 0.4rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(203, 213, 224, 0.5);
+}
+
+.gradeConfidenceGraphs .estimatedTag {
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.gradeConfidenceGraphs .estimatedValue {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.4);
+  position: relative;
+  white-space: nowrap;
+}
+
+.gradeConfidenceGraphs .estimatedValue::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #c53030;
+  z-index: 1;
+}
+
+.gradeConfidenceGraphs .percentageDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.gradeConfidenceGraphs .mainPercentage {
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradeConfidenceGraphs .confidenceRange {
+  font-size: 0.6rem;
+  color: #6b7280;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.2;
+  background: rgba(107, 114, 128, 0.1);
+  padding: 0.25rem;
+  border-radius: 4px;
+  border-left: 2px solid #667eea;
+}
+
+.gradeConfidenceGraphs .confidenceRange strong {
+  color: #e53e3e;
+  font-weight: 700;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .headerContent {
@@ -724,9 +831,10 @@
   }
 
   .candidateAnalysisGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
   }
-
+  
   .updateInfo {
     flex-direction: column;
     gap: 0.75rem;
@@ -774,9 +882,207 @@
   }
 }
 
+.gradeConfidenceGraphs .candidateCard {
+  background: rgba(255, 255, 255, 0.95);
+  color: #2d3748;
+  padding: 0.6rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.gradeConfidenceGraphs .candidateCard::before {
+  display: none;
+}
+
+.gradeConfidenceGraphs .candidateHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.gradeConfidenceGraphs .candidateHeader h3 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.gradeConfidenceGraphs .voteBar {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 8px;
+  overflow: visible;
+  margin-bottom: 0.4rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(203, 213, 224, 0.5);
+}
+
+.gradeConfidenceGraphs .estimatedTag {
+  position: absolute;
+  top: -15px;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.gradeConfidenceGraphs .estimatedValue {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.4);
+  position: relative;
+  white-space: nowrap;
+}
+
+.gradeConfidenceGraphs .estimatedValue::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #c53030;
+  z-index: 1;
+}
+
+.gradeConfidenceGraphs .percentageDisplay {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.gradeConfidenceGraphs .mainPercentage {
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradeConfidenceGraphs .confidenceRange {
+  font-size: 0.6rem;
+  color: #6b7280;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.2;
+  background: rgba(107, 114, 128, 0.1);
+  padding: 0.25rem;
+  border-radius: 4px;
+  border-left: 2px solid #667eea;
+}
+
+.gradeConfidenceGraphs .confidenceRange strong {
+  color: #e53e3e;
+  font-weight: 700;
+}
+
+.gradeConfidenceContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gradeConfidenceRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.gradeRowLabel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.2rem;
+}
+
+.gradeVoteBar {
+  position: relative;
+  height: 12px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 8px;
+  overflow: visible;
+  margin-bottom: 0.2rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(203, 213, 224, 0.5);
+}
+
+.gradeConfidenceBar {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.gradeConfidenceBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 8px;
+  opacity: 0.8;
+  box-shadow: 0 1px 4px rgba(102, 126, 234, 0.3);
+  transition: all 0.8s ease;
+}
+
+.gradeEstimatedTag {
+  position: absolute;
+  top: -23px;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.gradeEstimatedValue {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  color: white;
+  padding: 0.15rem 0.3rem;
+  border-radius: 6px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(229, 62, 62, 0.4);
+  position: relative;
+  white-space: nowrap;
+}
+
+.gradeEstimatedValue::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 3px solid #c53030;
+  z-index: 1;
+}
+
+.gradePercentageText {
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+}
+
 @media (max-width: 1024px) {
   .candidateAnalysisGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -848,7 +1154,7 @@
   }
   
   .candidateAnalysisGrid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 }
