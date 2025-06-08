@@ -46,3 +46,18 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Safe area 처리 */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* iOS Safari에서 상태바 겹침 방지 */
+@supports (padding: max(0px)) {
+  body {
+    padding-top: max(env(safe-area-inset-top), 20px);
+  }
+}

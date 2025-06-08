@@ -10,9 +10,11 @@
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
   box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
   position: fixed;
   height: 100vh;
+  height: 100dvh;
 }
 
 .sidebarContent {
@@ -125,6 +127,7 @@
 .logout {
   margin-top: auto;
   padding-top: 0.5rem;
+  padding-bottom: calc(-1.5rem + env(safe-area-inset-bottom));
   border-top: 1px solid #4a5568;
   flex-shrink: 0;
 }
@@ -179,6 +182,7 @@
 @media (max-width: 768px) {
   .sidebar {
     width: 100px;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
   }
   
   .sidebarContent {
@@ -224,6 +228,7 @@
   .sidebar {
     width: 80px;
     padding: 1rem 0.5rem;
+    padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
   }
   
   .sidebarContent {
