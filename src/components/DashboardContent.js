@@ -172,7 +172,7 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
           <div className={styles.gradeAnalysis}>
             <h2 className={styles.sectionTitle}>
               <span className={styles.titleIcon}><i className="fas fa-chart-bar"></i></span>
-              학년별 상세 분석 (모비율의 추정)
+              학년별 상세 분석 (모비율의 추정) - 찬성: 초록색 / 반대: 주황색
               <span className={styles.confidence}>
                 (위와 동일)
               </span>
