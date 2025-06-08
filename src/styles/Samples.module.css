@@ -1,157 +1,507 @@
 .container {
+  min-height: 100vh;
   background: #f8fafc;
+  padding: 1.4rem;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 1rem;
+  color: #667eea;
+  font-size: 1.2rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: white;
-  padding: 1.5rem 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  background: #ffffff;
+  color: #2d3748;
+  padding: 1.4rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  border: 2px solid #667eea;
+  margin-bottom: 1.4rem;
 }
 
 .header h1 {
   color: #2d3748;
   margin: 0;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .surveyButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  padding: 0.875rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
+  padding: 0.7rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .surveyButton:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.buttonIcon {
+  font-size: 1.2rem;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.statCard {
+  background: #ffffff;
+  color: #2d3748;
+  border-radius: 16px;
+  padding: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  border: 2px solid #667eea;
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.25);
+  border-color: #764ba2;
+}
+
+.statIcon {
+  font-size: 2rem;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 10px;
+  padding: 0.6rem;
+  border: 2px solid rgba(102, 126, 234, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+}
+
+.statContent h3 {
+  margin: 0 0 0.3rem 0;
+  color: #4a5568;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 0.15rem;
+}
+
+.statSubtext {
+  font-size: 0.7rem;
+  color: #718096;
 }
 
 .main {
-  background: white;
+  background: #ffffff;
   padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  border: 2px solid #667eea;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
 .card {
-  background: #f7fafc;
+  background: #ffffff;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   padding: 1.5rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.08);
 }
 
 .card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
   border-color: #667eea;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.cardComplete {
+  border-color: #48bb78;
+  box-shadow: 0 2px 10px rgba(72, 187, 120, 0.1);
+}
+
+.cardComplete:hover {
+  border-color: #38a169;
+  box-shadow: 0 8px 25px rgba(72, 187, 120, 0.2);
+}
+
+.cardWarning {
+  border-color: #ed8936;
+  box-shadow: 0 2px 10px rgba(237, 137, 54, 0.1);
+}
+
+.cardWarning:hover {
+  border-color: #dd6b20;
+  box-shadow: 0 8px 25px rgba(237, 137, 54, 0.2);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
 }
 
 .card h3 {
   color: #2d3748;
-  margin: 0 0 1rem 0;
-  font-size: 1.2rem;
+  margin: 0;
+  font-size: 1.3rem;
   font-weight: 600;
-  text-align: center;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badgeComplete {
+  background: #48bb78;
+  color: white;
+}
+
+.badgeWarning {
+  background: #ed8936;
+  color: white;
+}
+
+.badgeProgress {
+  background: #667eea;
+  color: white;
 }
 
 .progress {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .numbers {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9rem;
-  color: #4a5568;
-  font-weight: 500;
+  font-size: 1rem;
+}
+
+.current, .target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.current strong, .target strong {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.current small, .target small {
+  font-size: 0.75rem;
+  color: #718096;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.progressContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .bar {
-  width: 100%;
-  height: 12px;
+  flex: 1;
+  height: 16px;
   background: #e2e8f0;
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   position: relative;
 }
 
 .fill {
   height: 100%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 6px;
-  transition: width 0.5s ease;
+  border-radius: 8px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  overflow: hidden;
 }
 
-.fill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  animation: shimmer 2s infinite;
+.fillProgress {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+.fillWarning {
+  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
 }
 
-.percentage {
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin-top: 0.5rem;
-}
-
-/* Progress status colors */
-.card[data-status="complete"] {
-  border-color: #48bb78;
-  background: #f0fff4;
-}
-
-.card[data-status="complete"] .fill {
+.fillComplete {
   background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
 }
 
-.card[data-status="warning"] {
-  border-color: #ed8936;
-  background: #fffaf0;
+.fillShine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  animation: shine 2s infinite;
 }
 
-.card[data-status="warning"] .fill {
-  background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+@keyframes shine {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+.percentage {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d3748;
+  min-width: 60px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.percentageComplete {
+  color: #48bb78;
+}
+
+.checkIcon {
+  font-size: 1rem;
+  color: #48bb78;
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% { transform: scale(1); }
+  40%, 43% { transform: scale(1.2); }
+  70% { transform: scale(1.1); }
+}
+
+.overTarget {
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+.dateTimeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 0.8rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.15);
+  border: 2px solid #667eea;
+  margin-bottom: 1.4rem;
+}
+
+.dateTimeInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.dateDisplay, .timeDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: #2d3748;
+}
+
+.dateDisplay i, .timeDisplay i {
+  color: #667eea;
+  font-size: 1.2rem;
+  width: 20px;
+}
+
+.dateDisplay span {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.timeDisplay span {
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: #667eea;
+}
+
+.analogClock {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.clockFace {
+  width: 100%;
+  height: 100%;
+  border: 3px solid #667eea;
+  border-radius: 50%;
+  position: relative;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.2);
+}
+
+.clockTick {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  background: #cbd5e0;
+  transform-origin: 0 0;
+}
+
+.clockNumber {
+  position: absolute;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #667eea;
+  user-select: none;
+}
+
+.hourHand {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 3px;
+  height: 20%;
+  background: #2d3748;
+  transform-origin: bottom center;
+  border-radius: 2px 2px 0 0;
+  z-index: 3;
+  margin-left: -1.5px;
+}
+
+.minuteHand {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  width: 2px;
+  height: 30%;
+  background: #4a5568;
+  transform-origin: bottom center;
+  border-radius: 1px 1px 0 0;
+  z-index: 2;
+  margin-left: -1px;
+}
+
+.secondHand {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  width: 1px;
+  height: 35%;
+  background: #e53e3e;
+  transform-origin: bottom center;
+  z-index: 4;
+  margin-left: -0.5px;
+  transition: transform 0.05s ease-out;
+}
+
+.clockCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #667eea;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  border: 2px solid #ffffff;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
+  .container {
+    padding: 0.7rem;
+  }
+  
   .header {
     flex-direction: column;
     gap: 1rem;
-    text-align: center;
+    padding: 1rem 1.5rem;
+  }
+  
+  .header h1 {
+    font-size: 1.2rem;
+  }
+  
+  .dashboard {
+    grid-template-columns: 1fr;
   }
   
   .grid {
@@ -161,18 +511,88 @@
   .main {
     padding: 1rem;
   }
-}
-
-@media (max-width: 480px) {
+  
   .card {
     padding: 1rem;
   }
   
+  .statCard {
+    padding: 1rem;
+  }
+  
+  .dateTimeContainer {
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.6rem 1.2rem;
+    text-align: center;
+  }
+  
+  .analogClock {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .clockNumber {
+    font-size: 0.6rem;
+  }
+  
+  .clockTick {
+    width: 1.5px;
+    height: 6px;
+  }
+  
+  .hourHand {
+    width: 2px;
+    margin-left: -1px;
+  }
+  
+  .minuteHand {
+    width: 1.5px;
+    margin-left: -0.75px;
+  }
+  
+  .clockCenter {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (max-width: 480px) {
   .numbers {
-    font-size: 0.8rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .progressContainer {
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
   .percentage {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+  }
+  
+  .dateTimeContainer {
+    padding: 0.6rem;
+  }
+  
+  .analogClock {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .clockNumber {
+    font-size: 0.5rem;
+  }
+  
+  .clockTick {
+    width: 1px;
+    height: 4px;
+  }
+  
+  .clockCenter {
+    width: 4px;
+    height: 4px;
   }
 }

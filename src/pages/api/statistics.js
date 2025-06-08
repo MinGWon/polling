@@ -48,8 +48,9 @@ export default async function handler(req, res) {
     const [overallResults] = await db.execute(`
       SELECT candidate, COUNT(*) as count
       FROM responses 
+      WHERE candidate IN ('Y', 'N')
       GROUP BY candidate
-      ORDER BY candidate
+      ORDER BY candidate DESC
     `);
     
     const [totalCount] = await db.execute('SELECT COUNT(*) as total FROM responses');
@@ -68,12 +69,27 @@ export default async function handler(req, res) {
       };
     });
     
+    // Ensure both Y and N are present in results
+    const allOptions = ['Y', 'N'];
+    const completeOverall = allOptions.map(option => {
+      const existing = overall.find(item => item.name === option);
+      if (existing) return existing;
+      
+      return {
+        name: option,
+        percentage: 0,
+        sampleSize: 0,
+        confidenceInterval: { lower: 0, upper: 0 }
+      };
+    });
+    
     // Get statistics by grade
     const [gradeResults] = await db.execute(`
       SELECT grade, candidate, COUNT(*) as count
       FROM responses 
+      WHERE candidate IN ('Y', 'N')
       GROUP BY grade, candidate
-      ORDER BY grade, candidate
+      ORDER BY grade, candidate DESC
     `);
     
     const [gradeTotals] = await db.execute(`
@@ -123,7 +139,7 @@ export default async function handler(req, res) {
     });
     
     res.status(200).json({
-      overall,
+      overall: completeOverall,
       byGrade,
       totalResponses: total,
       populationSize: 308,

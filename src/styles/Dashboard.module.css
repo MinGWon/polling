@@ -103,30 +103,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 0.75rem 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   backdrop-filter: blur(5px);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 
 .updateLeft {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  justify-content: flex-start;
+  padding-left: 0.5rem;
 }
 
 .updateRight {
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 0;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding-right: 0.5rem;
 }
 
 .updateLabel {
   font-size: 0.9rem;
   font-weight: 600;
   color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .updateTime {
@@ -140,6 +159,7 @@
 
 .clockIcon {
   font-size: 0.8rem;
+  color: inherit;
 }
 
 .sampleInfo {
@@ -148,10 +168,15 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .sampleIcon {
   font-size: 0.8rem;
+  color: inherit;
 }
 
 .sampleInfo strong {
@@ -186,6 +211,7 @@
 
 .titleIcon {
   font-size: 2rem;
+  color: inherit;
 }
 
 .confidence {
@@ -257,7 +283,7 @@
 
 .voteBar {
   position: relative;
-  height: 24px;
+  height: 17px;
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   border-radius: 12px;
   overflow: visible;
@@ -299,7 +325,7 @@
   height: 100%;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   border-radius: 12px;
-  opacity: 0.6;
+  opacity: 0.8;
   box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
   transition: all 0.8s ease;
 }
@@ -342,10 +368,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  border-radius: 14px;
-  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c, #4facfe, #00f2fe, #667eea);
-  background-size: 400% 400%;
-  animation: unicornBorder 3s ease infinite;
+  border-radius: 14px;  background-size: 400% 400%;
   z-index: -1;
 }
 
@@ -363,17 +386,6 @@
   z-index: 1;
 }
 
-@keyframes unicornBorder {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
 
 .percentageDisplay {
   display: flex;
@@ -526,7 +538,7 @@
 
 .candidateAnalysisGrid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
@@ -717,17 +729,34 @@
 
   .updateInfo {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
     text-align: center;
+    padding: 0.75rem 1rem;
   }
   
   .updateLeft {
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .updateRight {
+    width: 100%;
+    justify-content: center;
+    padding-right: 0;
+  }
+
+  .updateLabel, .sampleInfo {
+    font-size: 0.8rem;
+    white-space: normal;
+    text-overflow: initial;
+    overflow: visible;
   }
 
   .voteBar {
-    height: 20px;
+    height: 14px;
     margin-bottom: 0.6rem;
   }
   
@@ -795,26 +824,31 @@
   
   .updateInfo {
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.5rem;
     text-align: center;
-    padding: 0.5rem;
+    padding: 0.75rem 0.75rem;
   }
   
   .updateLeft {
     flex-direction: column;
     gap: 0.25rem;
+    padding-left: 0;
+  }
+
+  .updateRight {
+    padding-right: 0;
   }
 }
 
 /* 큰 화면에서는 기본 크기 유지 */
 @media (min-width: 1025px) {
   .candidatesGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
   
   .candidateAnalysisGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 }

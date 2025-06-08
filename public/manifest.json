@@ -1,6 +1,6 @@
 {
   "name": "S-STAT 출구조사",
-  "short_name": "S-STAT",
+  "short_name": "S-STAT 출구조사",
   "description": "제 51대 순창고등학교 학생회장 선거 실시간 출구조사 현황",
   "start_url": "/",
   "scope": "/",
