@@ -81,15 +81,13 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
             </div>
           </div>
           <div className={styles.updateInfo}>
-            <div className={styles.updateLeft}>
-              <span className={styles.updateLabel}><i className="fas fa-chart-bar"></i> 실시간 업데이트</span>
-              <span className={styles.updateTime}>
+            <div className={styles.updateLeft}>              <span className={styles.updateTime}>
                 <span className={styles.clockIcon}><i className="fas fa-clock"></i></span>
                 {new Date().toLocaleTimeString('ko-KR')}
               </span>
 
-              <span className={styles.updateTime}>
-                              * 본 결과는 출구조사를 통한 추정치이며, 실제 개표 결과와 차이가 있을 수 있습니다.
+              <span className={styles.updateTime} style={{ whiteSpace: 'nowrap' }}>
+              * 출구조사를 통한 추정치이며, 실제 개표 결과와 차이가 있을 수 있습니다.
               </span>
             </div>
             <div className={styles.updateRight}>
