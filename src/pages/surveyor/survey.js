@@ -19,6 +19,30 @@ export default function Survey() {
     setLoading(true);
 
     try {
+      // First check if target limit is exceeded
+      const checkResponse = await fetch('/api/check-target', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          grade: formData.grade,
+          gender: formData.gender
+        })
+      });
+
+      const checkData = await checkResponse.json();
+
+      if (!checkResponse.ok || checkData.exceeded) {
+        await Swal.fire({
+          title: '목적 표본 수 초과',
+          text: '목적 표본 수를 초과했습니다.',
+          icon: 'warning',
+          confirmButtonText: '확인',
+          confirmButtonColor: '#f39c12'
+        });
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch('/api/responses', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -64,93 +88,100 @@ export default function Survey() {
         <title>출구조사 - 출구조사 시스템</title>
       </Head>
       <div className={styles.container}>
-        <main className={styles.main}>
-          <form className={styles.form} onSubmit={handleSubmit}>
-            <div className={styles.titleSection}>
-              <p className={styles.electionTitle}>제 51대 순창고등학교 학생회장 선거</p>
-              <h1 className={styles.title}>출구조사 설문지</h1>
-            </div>
-            <div className={styles.field}>
-              <label>학년</label>
-              <div className={styles.buttonGroup}>
-                {['1', '2', '3'].map((grade) => (
+        <div className={styles.centerWrapper}>
+          <main className={styles.main}>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.titleSection}>
+                <p className={styles.electionTitle}>제 51대 순창고등학교 학생회장 선거</p>
+                <h1 className={styles.title}>출구조사 설문지</h1>
+              </div>
+              <div className={styles.field}>
+                <label>학년</label>
+                <div className={styles.buttonGroup}>
+                  {['1', '2', '3'].map((grade) => (
+                    <button
+                      key={grade}
+                      type="button"
+                      className={`${styles.optionButton} ${
+                        formData.grade === grade ? styles.selected : ''
+                      }`}
+                      onClick={() => setFormData({...formData, grade})}
+                    >
+                      {grade}학년
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.field}>
+                <label>성별</label>
+                <div className={styles.buttonGroup}>
                   <button
-                    key={grade}
                     type="button"
                     className={`${styles.optionButton} ${
-                      formData.grade === grade ? styles.selected : ''
+                      formData.gender === 'male' ? styles.selected : ''
                     }`}
-                    onClick={() => setFormData({...formData, grade})}
+                    onClick={() => setFormData({...formData, gender: 'male'})}
                   >
-                    {grade}학년
+                    남성
                   </button>
-                ))}
-              </div>
-            </div>
-            <div className={styles.field}>
-              <label>성별</label>
-              <div className={styles.buttonGroup}>
-                <button
-                  type="button"
-                  className={`${styles.optionButton} ${
-                    formData.gender === 'male' ? styles.selected : ''
-                  }`}
-                  onClick={() => setFormData({...formData, gender: 'male'})}
-                >
-                  남성
-                </button>
-                <button
-                  type="button"
-                  className={`${styles.optionButton} ${
-                    formData.gender === 'female' ? styles.selected : ''
-                  }`}
-                  onClick={() => setFormData({...formData, gender: 'female'})}
-                >
-                  여성
-                </button>
-              </div>
-            </div>
-            <div className={styles.field}>
-              <label>투표한 후보</label>
-              <div className={styles.ballotTable}>
-                {['A', 'B', 'C'].map((candidate) => (
-                  <div
-                    key={candidate}
-                    className={`${styles.ballotRow} ${
-                      formData.candidate === candidate ? styles.stamped : ''
+                  <button
+                    type="button"
+                    className={`${styles.optionButton} ${
+                      formData.gender === 'female' ? styles.selected : ''
                     }`}
-                    onClick={() => setFormData({...formData, candidate})}
+                    onClick={() => setFormData({...formData, gender: 'female'})}
                   >
-                    <div className={styles.candidateInfo}>
-                      <span className={styles.candidateNumber}>{candidate}</span>
-                      <span className={styles.candidateName}>후보 {candidate}</span>
-                    </div>
-                    <div className={styles.stampArea}>
-                      {formData.candidate === candidate && (
-                        <div className={styles.stamp}>
-                          <Image
-                            src="/stamp.png"
-                            alt="투표 도장"
-                            width={60}
-                            height={60}
-                            className={styles.stampImage}
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
+                    여성
+                  </button>
+                </div>
               </div>
-            </div>
-            <button 
-              type="submit" 
-              disabled={loading || !formData.grade || !formData.gender || !formData.candidate}
-              className={styles.submitButton}
-            >
-              {loading ? '저장 중...' : '응답 저장'}
-            </button>
-          </form>
-        </main>
+              <div className={styles.field}>
+                <label>투표 결과</label>
+                <div className={styles.ballotTable}>
+                  {[
+                    { value: 'Y', label: '찬성', icon: 'fas fa-check' },
+                    { value: 'N', label: '반대', icon: 'fas fa-times' }
+                  ].map((option) => (
+                    <div
+                      key={option.value}
+                      className={`${styles.ballotRow} ${
+                        formData.candidate === option.value ? styles.stamped : ''
+                      }`}
+                      onClick={() => setFormData({...formData, candidate: option.value})}
+                    >
+                      <div className={styles.candidateInfo}>
+                        <span className={styles.candidateNumber}>
+                          <i className={option.icon}></i>
+                        </span>
+                        <span className={styles.candidateName}>{option.label}</span>
+                      </div>
+                      <div className={styles.stampArea}>
+                        {formData.candidate === option.value && (
+                          <div className={styles.stamp}>
+                            <Image
+                              src="/stamp.png"
+                              alt="투표 도장"
+                              width={60}
+                              height={60}
+                              className={styles.stampImage}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <button 
+                type="submit" 
+                disabled={loading || !formData.grade || !formData.gender || !formData.candidate}
+                className={styles.submitButton}
+              >
+                {loading ? '저장 중...' : '응답 저장'}
+              </button>
+            </form>
+          </main>
+        </div>
       </div>
     </>
   );

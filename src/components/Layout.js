@@ -41,17 +41,17 @@ const Layout = ({ children }) => {
 
   // 로그인하지 않은 경우의 메뉴
   const guestMenus = [
-    { icon: '📊', text: '전광판', path: '/display' }
+    { icon: <i className="fas fa-tv"></i>, text: '전광판', path: '/display' }
   ];
 
   const adminMenus = [
-    { icon: '📊', text: '대시보드', path: '/admin/dashboard' },
-    { icon: '📋', text: '응답 관리', path: '/admin/responses' }
+    { icon: <i className="fas fa-chart-bar"></i>, text: '대시보드', path: '/admin/dashboard' },
+    { icon: <i className="fas fa-clipboard-list"></i>, text: '응답 관리', path: '/admin/responses' }
   ];
 
   const surveyorMenus = [
-    { icon: '📈', text: '표본 현황', path: '/surveyor/samples' },
-    { icon: '📝', text: '출구조사', path: '/surveyor/survey' }
+    { icon: <i className="fas fa-chart-line"></i>, text: '표본 현황', path: '/surveyor/samples' },
+    { icon: <i className="fas fa-edit"></i>, text: '출구조사', path: '/surveyor/survey' }
   ];
 
   let menus, displayName, roleText;
@@ -86,7 +86,7 @@ const Layout = ({ children }) => {
         
         <div className={styles.userInfo}>
           <div className={styles.userBox}>
-            👤
+            <i className="fas fa-user"></i>
           </div>
           <span className={styles.username}>{displayName}</span>
           <span className={styles.role}>{roleText}</span>
@@ -110,7 +110,7 @@ const Layout = ({ children }) => {
         {mounted && user && (
           <div className={styles.logout}>
             <button className={styles.logoutButton} onClick={handleLogout}>
-              <div className={styles.logoutIcon}>🚪</div>
+              <div className={styles.logoutIcon}><i className="fas fa-sign-out-alt"></i></div>
               <span>로그아웃</span>
             </button>
           </div>

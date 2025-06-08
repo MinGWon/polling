@@ -100,7 +100,7 @@ export default function Responses() {
                   <td>{response.id}</td>
                   <td>{response.grade}학년</td>
                   <td>{response.gender === 'male' ? '남성' : '여성'}</td>
-                  <td>후보 {response.candidate}</td>
+                  <td>{response.candidate === 'Y' ? '찬성' : response.candidate === 'N' ? '반대' : response.candidate}</td>
                   <td>{new Date(response.created_at).toLocaleString()}</td>
                   <td>
                     <button 

@@ -105,8 +105,8 @@ export default function Login() {
                 height={80}
                 className={styles.logoImage}
               />
-              <div className={styles.logo}>📊</div>
-              <h1 className={styles.title}>출구조사 시스템</h1>
+              <div className={styles.logo}><i className="fas fa-chart-bar"></i></div>
+              <h1 className={styles.title}>S-STAT 출구조사 시스템</h1>
               <p className={styles.description}>안전하고 신뢰할 수 있는 데이터 수집</p>
             </div>
             

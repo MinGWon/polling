@@ -28,22 +28,16 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
         totalResponses: 10,
         overall: [
           {
-            name: 'A',
-            percentage: 45,
-            sampleSize: 5,
-            confidenceInterval: { lower: 35, upper: 55 }
+            name: 'Y',
+            percentage: 65,
+            sampleSize: 7,
+            confidenceInterval: { lower: 55, upper: 75 }
           },
           {
-            name: 'B', 
+            name: 'N', 
             percentage: 35,
             sampleSize: 3,
             confidenceInterval: { lower: 25, upper: 45 }
-          },
-          {
-            name: 'C',
-            percentage: 20,
-            sampleSize: 2,
-            confidenceInterval: { lower: 10, upper: 30 }
           }
         ],
         byGrade: [
@@ -51,9 +45,8 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
             grade: 1,
             total: 100,
             candidates: [
-              { name: 'A', percentage: 40, sampleSize: 4, confidenceInterval: { lower: 30, upper: 50 } },
-              { name: 'B', percentage: 35, sampleSize: 3, confidenceInterval: { lower: 25, upper: 45 } },
-              { name: 'C', percentage: 25, sampleSize: 3, confidenceInterval: { lower: 15, upper: 35 } }
+              { name: 'Y', percentage: 60, sampleSize: 6, confidenceInterval: { lower: 50, upper: 70 } },
+              { name: 'N', percentage: 40, sampleSize: 4, confidenceInterval: { lower: 30, upper: 50 } }
             ]
           }
         ]
@@ -89,16 +82,16 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
           </div>
           <div className={styles.updateInfo}>
             <div className={styles.updateLeft}>
-              <span className={styles.updateLabel}>📊 실시간 업데이트</span>
+              <span className={styles.updateLabel}><i className="fas fa-chart-bar"></i> 실시간 업데이트</span>
               <span className={styles.updateTime}>
-                <span className={styles.clockIcon}>🕐</span>
+                <span className={styles.clockIcon}><i className="fas fa-clock"></i></span>
                 {new Date().toLocaleTimeString('ko-KR')}
               </span>
             </div>
             <div className={styles.updateRight}>
               <span className={styles.sampleInfo}>
-                <span className={styles.sampleIcon}>📈</span>
-                현재 표본 <strong>{statistics?.totalResponses || 0}건</strong>
+                <span className={styles.sampleIcon}><i className="fas fa-chart-line"></i></span>
+                현재 표본 <strong>{statistics?.totalResponses || 0}건 / 122건</strong>
               </span>
             </div>
           </div>
@@ -107,7 +100,7 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
         <main className={styles.main}>
           <div className={styles.mainResults}>
             <h2 className={styles.sectionTitle}>
-              <span className={styles.titleIcon}>🏆</span>
+              <span className={styles.titleIcon}><i className="fas fa-trophy"></i></span>
               실시간 추정 결과 (모비율의 추정)
               <span className={styles.confidence}>
                 (신뢰도 95% / 모집단: 순창고등학교 재학생(선거인) 308명 / Wilson Score Interval 사용)
@@ -115,57 +108,75 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
             </h2>
             
             <div className={styles.candidatesGrid}>
-              {statistics?.overall?.map((candidate, index) => (
-                <div key={candidate.name} className={`${styles.candidateCard} ${styles[`rank${index + 1}`]}`}>
-                  <div className={styles.candidateHeader}>
-                    <div className={styles.rankBadge}>
-                      {index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}
+              {statistics?.overall?.map((candidate, index) => {
+                const displayName = candidate.name === 'Y' ? '찬성' : '반대';
+                
+                return (
+                  <div key={candidate.name} className={`${styles.candidateCard} ${styles[`rank${index + 1}`]}`}>
+                    <div className={styles.candidateHeader}>
+                      <div className={styles.rankBadge}>
+                        {index === 0 ? <i className="fas fa-medal" style={{color: '#ffd700'}}></i> : 
+                         index === 1 ? <i className="fas fa-medal" style={{color: '#c0c0c0'}}></i> : 
+                         <i className="fas fa-medal" style={{color: '#cd7f32'}}></i>}
+                      </div>
+                      <h3>{displayName}</h3>
                     </div>
-                    <h3>후보 {candidate.name}</h3>
-                  </div>
                   
-                  <div className={styles.voteBar}>
-                    <div className={styles.confidenceBar}>
-                      <div 
-                        className={styles.confidenceBackground}
-                        style={{ 
-                          left: `${candidate.confidenceInterval.lower}%`,
-                          width: `${candidate.confidenceInterval.upper - candidate.confidenceInterval.lower}%`
-                        }}
-                      ></div>
-                      <div 
-                        className={styles.estimatedTag}
-                        style={{ left: `${candidate.percentage}%` }}
-                      >
-                        <span className={styles.estimatedValue}>{candidate.percentage}%</span>
+                    <div className={styles.voteBar}>
+                      <div className={styles.confidenceBar}>
+                        <div 
+                          className={styles.confidenceBackground}
+                          style={{ 
+                            left: `${candidate.confidenceInterval.lower}%`,
+                            width: `${candidate.confidenceInterval.upper - candidate.confidenceInterval.lower}%`,
+                            position: 'relative',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          <div style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: '-100%',
+                            width: '100%',
+                            height: '100%',
+                            background: 'linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%)',
+                            animation: 'shimmer 2s infinite ease-in-out'
+                          }}></div>
+                        </div>
+                        <div 
+                          className={styles.estimatedTag}
+                          style={{ left: `${candidate.percentage}%` }}
+                        >
+                          <span className={styles.estimatedValue}>{candidate.percentage}%</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 
-                  <div className={styles.percentageDisplay}>
-                    <span className={styles.mainPercentage}>
-                      {candidate.confidenceInterval.lower}% ~ {candidate.confidenceInterval.upper}%
-                    </span>
-                  </div>
+                    <div className={styles.percentageDisplay}>
+                      <span className={styles.mainPercentage}>
+                        {candidate.confidenceInterval.lower}% ~ {candidate.confidenceInterval.upper}%
+                      </span>
+                    </div>
                 
-                  <div className={styles.confidenceRange}>
-                    95% 신뢰구간 ({candidate.confidenceInterval.lower}% ~ {candidate.confidenceInterval.upper}%)
-                    <br />
-                    <strong>추정값: {candidate.percentage}%</strong>
+                    <div className={styles.confidenceRange}>
+                      신뢰도 95% / 신뢰구간 ({candidate.confidenceInterval.lower}% ~ {candidate.confidenceInterval.upper}%)
+                      / 
+                      <strong> 추정값: {candidate.percentage}%</strong>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
           <div className={styles.gradeAnalysis}>
             <h2 className={styles.sectionTitle}>
-              <span className={styles.titleIcon}>📊</span>
+              <span className={styles.titleIcon}><i className="fas fa-chart-bar"></i></span>
               학년별 상세 분석
             </h2>
             
             <div className={styles.candidateAnalysisGrid}>
-              {['A', 'B', 'C'].map((candidateName) => {
+              {['Y', 'N'].map((candidateName) => {
                 const candidateData = statistics?.byGrade.map(grade => {
                   const candidate = grade.candidates.find(c => c.name === candidateName);
                   return {
@@ -178,11 +189,12 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
                 });
 
                 const maxPercentage = Math.max(...candidateData.map(d => d.percentage));
+                const displayName = candidateName === 'Y' ? '찬성' : '반대';
 
                 return (
                   <div key={candidateName} className={styles.candidateAnalysisCard}>
                     <div className={styles.candidateAnalysisHeader}>
-                      <h3>후보 {candidateName}</h3>
+                      <h3>{displayName}</h3>
                     </div>
                     
                     <div className={styles.singleBand}>
@@ -214,11 +226,21 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
               * 본 결과는 출구조사를 통한 추정치이며, 실제 개표 결과와 차이가 있을 수 있습니다.
             </div>
             <div className={styles.autoUpdate}>
-              자동 업데이트 중... 🔄
+              자동 업데이트 중  <i className="fas fa-sync-alt fa-spin"></i>
             </div>
           </div>
         </main>
       </div>
+      <style jsx>{`
+        @keyframes shimmer {
+          0% {
+            left: -100%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
+      `}</style>
     </>
   );
 }
