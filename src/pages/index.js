@@ -99,13 +99,12 @@ export default function Login() {
           <div className={styles.loginBox}>
             <div className={styles.logoSection}>
               <Image 
-                src="/image.png" 
+                src="/image_black.png" 
                 alt="출구조사 시스템 로고" 
-                width={80} 
-                height={80}
+                width={120} 
+                height={120}
                 className={styles.logoImage}
               />
-              <div className={styles.logo}><i className="fas fa-chart-bar"></i></div>
               <h1 className={styles.title}>S-STAT 출구조사 시스템</h1>
               <p className={styles.description}>안전하고 신뢰할 수 있는 데이터 수집</p>
             </div>
