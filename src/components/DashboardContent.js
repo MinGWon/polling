@@ -103,7 +103,7 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
               <span className={styles.titleIcon}><i className="fas fa-trophy"></i></span>
               실시간 추정 결과 (모비율의 추정)
               <span className={styles.confidence}>
-                (신뢰도 95% / 모집단: 순창고등학교 재학생(선거인) 308명 / Wilson Score Interval 사용)
+                (신뢰도 95% / 모집단: 순창고등학교 재학생(선거인) 308명 / 표본 추출 방법: 층화추출 / Wilson Score Interval 사용)
               </span>
             </h2>
             
