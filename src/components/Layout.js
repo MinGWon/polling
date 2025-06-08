@@ -74,38 +74,44 @@ const Layout = ({ children }) => {
   return (
     <div className={styles.container}>
       <aside className={styles.sidebar}>
-        <div className={styles.logo}>
-          <Image 
-            src="/image.png" 
-            alt="로고" 
-            width={60} 
-            height={60}
-            className={styles.logoImage}
-          />
-        </div>
-        
-        <div className={styles.userInfo}>
-          <div className={styles.userBox}>
-            <i className="fas fa-user"></i>
+        <div className={styles.sidebarContent}>
+          <div className={styles.logo}>
+            <Image 
+              src="/image.png" 
+              alt="로고" 
+              width={60} 
+              height={60}
+              className={styles.logoImage}
+            />
           </div>
-          <span className={styles.username}>{displayName}</span>
-          <span className={styles.role}>{roleText}</span>
-        </div>
+          
+          <div 
+            className={`${styles.userInfo} ${mounted && user ? styles.clickable : ''}`}
+            onClick={mounted && user ? handleLogout : undefined}
+            title={mounted && user ? '클릭하여 로그아웃' : ''}
+          >
+            <div className={styles.userBox}>
+              <i className="fas fa-user"></i>
+            </div>
+            <span className={styles.username}>{displayName}</span>
+            <span className={styles.role}>{roleText}</span>
+          </div>
 
-        <nav className={styles.nav}>
-          {menus.map((menu) => (
-            <button
-              key={menu.path}
-              className={`${styles.menuItem} ${
-                router.pathname === menu.path ? styles.active : ''
-              }`}
-              onClick={() => router.push(menu.path)}
-            >
-              <div className={styles.menuIcon}>{menu.icon}</div>
-              <span className={styles.menuText}>{menu.text}</span>
-            </button>
-          ))}
-        </nav>
+          <nav className={styles.nav}>
+            {menus.map((menu) => (
+              <button
+                key={menu.path}
+                className={`${styles.menuItem} ${
+                  router.pathname === menu.path ? styles.active : ''
+                }`}
+                onClick={() => router.push(menu.path)}
+              >
+                <div className={styles.menuIcon}>{menu.icon}</div>
+                <span className={styles.menuText}>{menu.text}</span>
+              </button>
+            ))}
+          </nav>
+        </div>
 
         {mounted && user && (
           <div className={styles.logout}>
