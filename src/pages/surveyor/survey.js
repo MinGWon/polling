@@ -92,7 +92,7 @@ export default function Survey() {
           <main className={styles.main}>
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.titleSection}>
-                <p className={styles.electionTitle}>제 51대 순창고등학교 학생회장 선거</p>
+                <p className={styles.electionTitle}>제 58대 순창고등학교 학생회장 선거</p>
                 <h1 className={styles.title}>출구조사 설문지</h1>
               </div>
               <div className={styles.field}>

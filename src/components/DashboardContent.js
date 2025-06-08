@@ -72,7 +72,7 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
         <header className={styles.header}>
           <div className={styles.headerContent}>
             <div className={styles.schoolInfo}>
-              <h1>제 51대 순창고등학교 학생회장 선거</h1>
+              <h1>제 58대 순창고등학교 학생회장 선거</h1>
               <p>실시간 출구조사 현황</p>
             </div>
             <div className={styles.liveIndicator}>
