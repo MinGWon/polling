@@ -1,0 +1,28 @@
+{
+  "name": "S-STAT 출구조사",
+  "short_name": "S-STAT",
+  "description": "제 51대 순창고등학교 학생회장 선거 실시간 출구조사 현황",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "fullscreen"
+  ],
+  "orientation": "any",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "lang": "ko",
+  "categories": [
+    "education",
+    "government"
+  ],
+  "icons": [
+    {
+      "src": "/image_cut.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

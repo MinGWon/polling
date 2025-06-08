@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import styles from "@/styles/Login.module.css";
 import Swal from 'sweetalert2';
+import Image from 'next/image';
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -76,7 +77,12 @@ export default function Login() {
 
   // Prevent hydration mismatch by not rendering until mounted
   if (!mounted) {
-    return <div>로딩 중...</div>;
+    return (
+      <div className={styles.loadingContainer}>
+        <div className={styles.spinner}></div>
+        <p>로딩 중...</p>
+      </div>
+    );
   }
 
   return (
@@ -88,33 +94,70 @@ export default function Login() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.container}>
+        <div className={`${styles.backgroundPattern} ${styles.enhanced}`}></div>
         <main className={styles.main}>
-          <h1 className={styles.title}>출구조사 시스템</h1>
-          <form className={styles.form} onSubmit={handleLogin}>
-            <div className={styles.field}>
-              <label>사용자명</label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
+          <div className={styles.loginBox}>
+            <div className={styles.logoSection}>
+              <Image 
+                src="/image.png" 
+                alt="출구조사 시스템 로고" 
+                width={80} 
+                height={80}
+                className={styles.logoImage}
               />
+              <div className={styles.logo}>📊</div>
+              <h1 className={styles.title}>출구조사 시스템</h1>
+              <p className={styles.description}>안전하고 신뢰할 수 있는 데이터 수집</p>
             </div>
-            <div className={styles.field}>
-              <label>비밀번호</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button type="submit" disabled={loading}>
-              {loading ? "로그인 중..." : "로그인"}
-            </button>
-          </form>
+            
+            <form className={styles.form} onSubmit={handleLogin}>
+              <div className={styles.inputGroup}>
+                <input
+                  id="username"
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <label htmlFor="username" className={styles.label}>사용자명</label>
+                <div className={styles.inputLine}></div>
+              </div>
+
+              <div className={styles.inputGroup}>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={styles.input}
+                  required
+                />
+                <label htmlFor="password" className={styles.label}>비밀번호</label>
+                <div className={styles.inputLine}></div>
+              </div>
+
+              <button 
+                type="submit" 
+                className={styles.submitBtn}
+                disabled={loading}
+              >
+                <span className={styles.btnText}>
+                  {loading ? "로그인 중" : "로그인"}
+                </span>
+                {loading && <div className={styles.loadingDots}>
+                  <span></span><span></span><span></span>
+                </div>}
+              </button>
+            </form>
+          </div>
         </main>
       </div>
     </>
   );
 }
+
+// Add this to prevent layout from being applied
+Login.getLayout = function getLayout(page) {
+  return page;
+};
