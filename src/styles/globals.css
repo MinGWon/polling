@@ -47,17 +47,21 @@ a {
   }
 }
 
-/* Safe area 처리 */
-body {
-  padding-top: env(safe-area-inset-top);
-  padding-left: env(safe-area-inset-left);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* iOS Safari에서 상태바 겹침 방지 */
-@supports (padding: max(0px)) {
+/* Safe area 처리 - iPad만 적용 */
+@supports (padding: max(0px)) and (-webkit-touch-callout: default) {
   body {
     padding-top: max(env(safe-area-inset-top), 20px);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* 안드로이드는 좌우하단만 적용 */
+@supports not ((-webkit-touch-callout: default)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
