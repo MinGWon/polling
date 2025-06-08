@@ -87,6 +87,10 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
                 <span className={styles.clockIcon}><i className="fas fa-clock"></i></span>
                 {new Date().toLocaleTimeString('ko-KR')}
               </span>
+
+              <span className={styles.updateTime}>
+                              * 본 결과는 출구조사를 통한 추정치이며, 실제 개표 결과와 차이가 있을 수 있습니다.
+              </span>
             </div>
             <div className={styles.updateRight}>
               <span className={styles.sampleInfo}>
@@ -232,15 +236,6 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          <div className={styles.footer}>
-            <div className={styles.disclaimer}>
-              * 본 결과는 출구조사를 통한 추정치이며, 실제 개표 결과와 차이가 있을 수 있습니다.
-            </div>
-            <div className={styles.autoUpdate}>
-              자동 업데이트 중  <i className="fas fa-sync-alt fa-spin"></i>
             </div>
           </div>
         </main>
