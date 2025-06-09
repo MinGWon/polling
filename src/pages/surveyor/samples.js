@@ -17,7 +17,15 @@ export default function Samples() {
       setCurrentTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timeInterval);
+    // 데이터 새로고침 인터벌 (5초마다)
+    const dataInterval = setInterval(() => {
+      fetchSamples();
+    }, 5000);
+
+    return () => {
+      clearInterval(timeInterval);
+      clearInterval(dataInterval);
+    };
   }, []);
 
   const fetchSamples = async () => {
