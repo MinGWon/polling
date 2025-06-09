@@ -1,7 +1,7 @@
 import { connectDB } from '@/lib/db';
 
 // Wilson Score Interval for better confidence intervals
-function calculateWilsonInterval(successes, total, confidenceLevel = 0.95, populationSize = 308) {
+function calculateWilsonInterval(successes, total, confidenceLevel = 0.95, populationSize = 309) {
   if (total === 0) return { lower: 0, upper: 0 };
   
   const z = confidenceLevel === 0.95 ? 1.96 : 1.645;
@@ -59,7 +59,7 @@ export default async function handler(req, res) {
     // Calculate overall statistics with Wilson Score intervals
     const overall = overallResults.map(result => {
       const percentage = total > 0 ? Math.round((result.count / total) * 100 * 10) / 10 : 0;
-      const confidenceInterval = calculateWilsonInterval(result.count, total, 0.95, 308);
+      const confidenceInterval = calculateWilsonInterval(result.count, total, 0.95, 309);
       
       return {
         name: result.candidate,
@@ -99,8 +99,8 @@ export default async function handler(req, res) {
       ORDER BY grade
     `);
     
-    // Get grade population sizes (assuming equal distribution: 308/3 ≈ 103 per grade)
-    const gradePopulations = { 1: 103, 2: 103, 3: 102 }; // Total = 308
+    // Get grade population sizes (assuming equal distribution: 309/3 ≈ 103 per grade)
+    const gradePopulations = { 1: 103, 2: 103, 3: 102 }; // Total = 309
     
     // Process by grade statistics
     const byGrade = [];
@@ -142,7 +142,7 @@ export default async function handler(req, res) {
       overall: completeOverall,
       byGrade,
       totalResponses: total,
-      populationSize: 308,
+      populationSize: 309,
       lastUpdated: new Date().toISOString()
     });
     

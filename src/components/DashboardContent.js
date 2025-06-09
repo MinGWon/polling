@@ -133,7 +133,7 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
             <div className={styles.updateRight}>
               <span className={styles.sampleInfo}>
                 <span className={styles.sampleIcon}><i className="fas fa-chart-line"></i></span>
-                현재 표본 <strong>{statistics?.totalResponses || 0}건 / 122건</strong>
+                현재 표본 <strong>{statistics?.totalResponses || 0}건 / 120건</strong>
               </span>
             </div>
           </div>
