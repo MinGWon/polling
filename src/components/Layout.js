@@ -46,11 +46,11 @@ const Layout = ({ children }) => {
 
   const adminMenus = [
     { icon: <i className="fas fa-chart-bar"></i>, text: '대시보드', path: '/admin/dashboard' },
-    { icon: <i className="fas fa-clipboard-list"></i>, text: '응답 관리', path: '/admin/responses' }
+    { icon: <i className="fas fa-clipboard-list"></i>, text: '응답관리', path: '/admin/responses' }
   ];
 
   const surveyorMenus = [
-    { icon: <i className="fas fa-chart-line"></i>, text: '표본 현황', path: '/surveyor/samples' },
+    { icon: <i className="fas fa-chart-line"></i>, text: '표본현황', path: '/surveyor/samples' },
     { icon: <i className="fas fa-edit"></i>, text: '출구조사', path: '/surveyor/survey' }
   ];
 
