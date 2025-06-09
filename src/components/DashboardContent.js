@@ -20,7 +20,31 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
       }
       const data = await response.json();
       console.log('API Response:', data);
-      setStatistics(data);
+      
+      // Ensure all grades 1, 2, 3 are present with default structure
+      const ensureAllGrades = (apiData) => {
+        const defaultGrades = [1, 2, 3].map(grade => ({
+          grade,
+          total: 100,
+          candidates: [
+            { name: 'Y', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } },
+            { name: 'N', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } }
+          ]
+        }));
+        
+        const apiGrades = apiData?.byGrade || [];
+        const mergedGrades = defaultGrades.map(defaultGrade => {
+          const apiGrade = apiGrades.find(g => g.grade === defaultGrade.grade);
+          return apiGrade || defaultGrade;
+        });
+        
+        return {
+          ...apiData,
+          byGrade: mergedGrades
+        };
+      };
+      
+      setStatistics(ensureAllGrades(data));
     } catch (error) {
       console.error('Error fetching statistics:', error);
       // Add fallback test data to ensure graphs show
@@ -47,6 +71,22 @@ export default function DashboardContent({ title = "관리자 대시보드 - 출
             candidates: [
               { name: 'Y', percentage: 60, sampleSize: 6, confidenceInterval: { lower: 50, upper: 70 } },
               { name: 'N', percentage: 40, sampleSize: 4, confidenceInterval: { lower: 30, upper: 50 } }
+            ]
+          },
+          {
+            grade: 2,
+            total: 100,
+            candidates: [
+              { name: 'Y', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } },
+              { name: 'N', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } }
+            ]
+          },
+          {
+            grade: 3,
+            total: 100,
+            candidates: [
+              { name: 'Y', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } },
+              { name: 'N', percentage: 0, sampleSize: 0, confidenceInterval: { lower: 0, upper: 0 } }
             ]
           }
         ]
