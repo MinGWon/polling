@@ -9,6 +9,7 @@ export default function Survey() {
   const [formData, setFormData] = useState({
     grade: '',
     gender: '',
+    middleSchool: '',
     candidate: ''
   });
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,8 @@ export default function Survey() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           grade: formData.grade,
-          gender: formData.gender
+          gender: formData.gender,
+          middleSchool: formData.middleSchool
         })
       });
 
@@ -59,7 +61,7 @@ export default function Survey() {
           timer: 2000,
           timerProgressBar: true
         });
-        setFormData({ grade: '', gender: '', candidate: '' });
+        setFormData({ grade: '', gender: '', candidate: '', middleSchool: '' });
       } else {
         await Swal.fire({
           title: '저장 실패',
@@ -136,6 +138,28 @@ export default function Survey() {
                 </div>
               </div>
               <div className={styles.field}>
+                <label>출신 중학교</label>
+                <div className={`${styles.buttonGroup} ${styles.middleSchoolButtons}`}>
+                  {[
+                    { value: 'sc', label: '순창중' },
+                    { value: 'sg', label: '순창여중' },
+                    { value: 'scbk', label: '순창북중' },
+                    { value: 'etc', label: '기타' }
+                  ].map((school) => (
+                    <button
+                      key={school.value}
+                      type="button"
+                      className={`${styles.optionButton} ${
+                        formData.middleSchool === school.value ? styles.selected : ''
+                      }`}
+                      onClick={() => setFormData({...formData, middleSchool: school.value})}
+                    >
+                      {school.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.field}>
                 <label>투표 결과</label>
                 <div className={styles.ballotTable}>
                   {[
@@ -174,7 +198,7 @@ export default function Survey() {
               </div>
               <button 
                 type="submit" 
-                disabled={loading || !formData.grade || !formData.gender || !formData.candidate}
+                disabled={loading || !formData.grade || !formData.gender || !formData.middleSchool || !formData.candidate}
                 className={styles.submitButton}
               >
                 {loading ? '저장 중...' : '응답 저장'}

@@ -17,15 +17,15 @@ export default async function handler(req, res) {
       
     } else if (req.method === 'POST') {
       // Create new response
-      const { grade, gender, candidate } = req.body;
+      const { grade, gender, middleSchool, candidate } = req.body;
       
-      if (!grade || !gender || !candidate) {
+      if (!grade || !gender || !middleSchool || !candidate) {
         return res.status(400).json({ message: '모든 필드를 입력해주세요.' });
       }
       
       const [result] = await db.execute(
-        'INSERT INTO responses (grade, gender, candidate, surveyor_id) VALUES (?, ?, ?, ?)',
-        [grade, gender, candidate, 1] // Default surveyor_id for now
+        'INSERT INTO responses (grade, gender, school, candidate, surveyor_id) VALUES (?, ?, ?, ?, ?)',
+        [grade, gender, middleSchool, candidate, 1] // Default surveyor_id for now
       );
       
       res.status(201).json({ 
